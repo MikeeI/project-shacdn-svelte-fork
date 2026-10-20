@@ -51,20 +51,23 @@ export function parseUserConfigJson(value: string | undefined): UserConfigType {
 	}
 }
 
-function parseCookie(cookie: string): Record<string, string> {
-	const cookies = cookie.split(";");
-	const cookieMap: Record<string, string> = {};
-	for (const cookie of cookies) {
-		const [key, value] = cookie.split("=");
-		cookieMap[key.trim()] = decodeURIComponent(value);
+// Read only our cookie: `document.cookie` also carries cookies set by anything else on the
+// origin, and a malformed percent-escape in one of those must not fail every page load.
+function readCookie(cookie: string, name: string): string | undefined {
+	for (const part of cookie.split(";")) {
+		const separator = part.indexOf("=");
+		if (separator === -1 || part.slice(0, separator).trim() !== name) continue;
+		try {
+			return decodeURIComponent(part.slice(separator + 1));
+		} catch {
+			return undefined;
+		}
 	}
-	return cookieMap;
+	return undefined;
 }
 
 export function parseUserConfig(cookie: string): UserConfigType {
-	const cookieMap = parseCookie(cookie);
-	const userConfig = cookieMap[USER_CONFIG_COOKIE_NAME];
-	return parseUserConfigJson(userConfig);
+	return parseUserConfigJson(readCookie(cookie, USER_CONFIG_COOKIE_NAME));
 }
 
 export class UserConfig {
