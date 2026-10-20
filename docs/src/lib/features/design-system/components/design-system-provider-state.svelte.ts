@@ -75,6 +75,13 @@ class DesignSystemState implements IDesignSystemState {
 		if (presetFromUrl && isValidPreset(presetFromUrl)) {
 			this.#preset.current = presetFromUrl;
 		}
+		// Normalize once before `StateHistory` starts tracking so a shared or stored preset that
+		// breaks a style constraint does not become an undo step.
+		const initial = decodePreset(this.#preset.current);
+		if (initial) {
+			const constrained = applyStyleConstraints(initial);
+			if (constrained !== initial) this.#preset.current = encodePreset(constrained);
+		}
 		this.#locks = new PersistedState<Lockable>("locks", {
 			style: false,
 			baseColor: false,
@@ -108,7 +115,7 @@ class DesignSystemState implements IDesignSystemState {
 	}
 
 	private set system(value: PresetConfig) {
-		this.#preset.current = encodePreset(value);
+		this.#preset.current = encodePreset(applyStyleConstraints(value));
 		const searchParams = new SvelteURLSearchParams(page.url.searchParams);
 		searchParams.set("preset", this.#preset.current);
 		goto(`${page.url.pathname}?${searchParams.toString()}${page.url.hash}`, {
@@ -352,6 +359,21 @@ class DesignSystemState implements IDesignSystemState {
 	get shareUrl() {
 		return `${page.url.origin}/create?preset=${this.#preset.current}`;
 	}
+}
+
+/**
+ * Styles that only support some radii. Applying this inside the single `system` write keeps
+ * every user action to one preset change; correcting it afterwards in an effect records the
+ * unconstrained state as its own `StateHistory` entry, and undoing to it re-triggers the fix.
+ */
+function applyStyleConstraints(config: PresetConfig): PresetConfig {
+	if ((config.style === "lyra" || config.style === "sera") && config.radius !== "none") {
+		return { ...config, radius: "none" };
+	}
+	if (config.style === "rhea" && config.radius === "large") {
+		return { ...config, radius: "default" };
+	}
+	return config;
 }
 
 function randomItem<T>(array: readonly T[]): T {
