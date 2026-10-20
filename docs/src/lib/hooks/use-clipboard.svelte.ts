@@ -55,6 +55,9 @@ export class UseClipboard {
 		}
 
 		this.#copiedStatus = await copyText(text.toString());
+		if (this.#copiedStatus === "success") {
+			this.#lastCopied = text.toString();
+		}
 
 		this.timeout = setTimeout(() => {
 			this.#copiedStatus = undefined;
