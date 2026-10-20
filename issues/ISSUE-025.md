@@ -1,6 +1,6 @@
 # ISSUE-025 — cli/update: item `css` and `cssVars` are never applied
 
-State: Investigating
+State: Draft-Ready
 Authorized-Work: Research-and-Reporting
 Publication-Target: New-issue
 External-Reference: Not published.
@@ -26,6 +26,8 @@ Impact [S]: Their stylesheet changes are dropped unless fonts also contribute CS
 - [S] `packages/cli/src/commands/update/index.ts:228-233` — merge inside the task.
 - [S] `packages/cli/src/commands/update/index.ts:271` — gate on `cssVars`/`css` keys.
 - [S] `packages/cli/src/commands/update/index.ts:289` — `await p.tasks(tasks)` runs afterwards.
+- [O] `shadcn-svelte@1.7.0`, Node 26.12.0, custom registry via `COMPONENTS_REGISTRY_URL`: `add e2card` wrote `--e2`; after the served item gained `cssVars.light["e2-new"]`, `update e2card --yes --no-deps` printed `Success! Component update completed.` but `layout.css` still had only `--e2` and `--color-e2`; `add e2card --overwrite` against the same item writes `--e2-new`.
+- [O] Repository: https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-registry
 
 ## Prior-Art
 
@@ -52,15 +54,13 @@ Always push the stylesheet task and check for non-empty CSS inside it, or merge 
 
 ## Publication-Blockers
 
-- [O] Reproduction with a custom item declaring `cssVars`.
-- `envinfo` output for the required System Info field.
-- User approval of the exact draft and target.
+None.
 
 ## Next-Action
 
-Summary: Build runnable reproduction
-Action: Serve a custom item with `cssVars`, run `update`, and record the unchanged stylesheet, repository URL, and envinfo in the draft.
-Done-When: The draft contains a working reproduction link, observed CSS, and envinfo.
+Summary: Await draft approval
+Action: Show the exact draft and target to the user and publish only after approval.
+Done-When: The user approves or rejects the exact current draft and target.
 
 ## Publication-Draft
 
@@ -78,11 +78,30 @@ In `commands/update/index.ts`, each item's `css` and `cssVars` are merged inside
 
 ### Reproduction
 
-Pending: repository link.
+https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-registry (section "`update` ignores `cssVars` of changed items")
+
+1. `add e2card` from `registry/`: `layout.css` gets `--e2`.
+2. `update e2card --yes` from `registry-v2/`, where the item adds `cssVars.light["e2-new"]`: prints `Success! Component update completed.`, but `--e2-new` is not written.
+3. `add e2card --overwrite` from `registry-v2/` does write `--e2-new` and `--color-e2-new`.
 
 ### System Info
 
-Pending: envinfo output.
+```text
+System:
+  OS: Linux 6.8 Ubuntu 24.04.5 LTS 24.04.5 LTS (Noble Numbat)
+  CPU: (32) x64 AMD Ryzen 9 5950X 16-Core Processor
+  Shell: 5.2.21 - /bin/bash
+Binaries:
+  Node: 26.12.0 - /usr/bin/node
+  npm: 12.2.0 - /usr/bin/npm
+  pnpm: 10.32.1 - /usr/bin/pnpm
+npmPackages:
+  @lucide/svelte: ^1.60.0 => 1.60.0
+  @sveltejs/kit: ^3.0.0 => 3.1.0
+  shadcn-svelte: ^1.7.0 => 1.7.0
+  svelte: ^5.57.1 => 5.57.2
+  tailwindcss: ^4.3.0 => 4.3.3
+```
 
 ### Severity
 

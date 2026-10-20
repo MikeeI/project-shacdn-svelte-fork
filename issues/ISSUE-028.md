@@ -1,6 +1,6 @@
 # ISSUE-028 — cli/registry: schema-valid `registry:item` fails with a raw `TODO` error
 
-State: Investigating
+State: Draft-Ready
 Authorized-Work: Research-and-Reporting
 Publication-Target: New-issue
 External-Reference: Not published.
@@ -26,6 +26,8 @@ Impact [S]: The command aborts with a non-`CLIError` message and nothing is writ
 - [S] `packages/cli/src/utils/registry/schema.ts:6-19` — `"registry:item"` in the allowed types.
 - [S] `packages/cli/src/utils/registry/index.ts:226` — `throw new Error("TODO: unhandled item type ...")`.
 - [S] `packages/cli/src/utils/add-registry-items.ts:127` and `packages/cli/src/commands/update/index.ts:176` — called for every non-style item.
+- [O] `shadcn-svelte@1.7.0`, Node 26.12.0: `add http://localhost:5555/r/e22item.json --yes --no-deps` for an item with `"type": "registry:item"` and one `registry:file` printed `Error: TODO: unhandled item type registry:item` and exited 1.
+- [O] Repository: https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-registry
 
 ## Prior-Art
 
@@ -52,15 +54,13 @@ Map `registry:item` to `cwd` like `registry:file`, or reject it during validatio
 
 ## Publication-Blockers
 
-- [O] Reproduction with a hosted `registry:item`.
-- `envinfo` output for the required System Info field.
-- User approval of the exact draft and target.
+None.
 
 ## Next-Action
 
-Summary: Build runnable reproduction
-Action: Host a minimal `registry:item`, run `add` on it, and record the error, URL, and envinfo in the draft.
-Done-When: The draft contains a reproduction URL, observed error, and envinfo.
+Summary: Await draft approval
+Action: Show the exact draft and target to the user and publish only after approval.
+Done-When: The user approves or rejects the exact current draft and target.
 
 ## Publication-Draft
 
@@ -78,11 +78,34 @@ Body:
 
 ### Reproduction
 
-Pending: repository link.
+https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-registry (section "`registry:item` is accepted by the schema but rejected on install")
+
+`pnpm dlx shadcn-svelte@latest add http://localhost:5555/r/e22item.json --yes --no-deps`
+
+### Logs
+
+```text
+└  Error: TODO: unhandled item type registry:item
+```
 
 ### System Info
 
-Pending: envinfo output.
+```text
+System:
+  OS: Linux 6.8 Ubuntu 24.04.5 LTS 24.04.5 LTS (Noble Numbat)
+  CPU: (32) x64 AMD Ryzen 9 5950X 16-Core Processor
+  Shell: 5.2.21 - /bin/bash
+Binaries:
+  Node: 26.12.0 - /usr/bin/node
+  npm: 12.2.0 - /usr/bin/npm
+  pnpm: 10.32.1 - /usr/bin/pnpm
+npmPackages:
+  @lucide/svelte: ^1.60.0 => 1.60.0
+  @sveltejs/kit: ^3.0.0 => 3.1.0
+  shadcn-svelte: ^1.7.0 => 1.7.0
+  svelte: ^5.57.1 => 5.57.2
+  tailwindcss: ^4.3.0 => 4.3.3
+```
 
 ### Severity
 

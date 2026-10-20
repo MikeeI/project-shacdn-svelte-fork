@@ -1,6 +1,6 @@
 # ISSUE-021 — cli/apply: `--only theme font` skips installing font packages
 
-State: Investigating
+State: Draft-Ready
 Authorized-Work: Research-and-Reporting
 Publication-Target: New-issue
 External-Reference: Not published.
@@ -26,6 +26,8 @@ Impact [S]: Font CSS imports are written but `@fontsource-variable/*` is not ins
 - [S] `packages/cli/src/commands/apply/index.ts:107` — `const onlyApplyTheme = only?.includes("theme")`.
 - [S] `packages/cli/src/commands/apply/index.ts:145-146` — comment "never install dependencies if only the theme is being applied", then `return`.
 - [S] `packages/cli/src/commands/apply/index.ts:40` — `--only <parts...>` accepts `theme` and `font` together.
+- [O] `shadcn-svelte@1.7.0`, SvelteKit 3.1.0, Node 26.12.0: after `init --preset b0`, `apply --preset bGW --only theme font` added `@import "@fontsource-variable/noto-sans";` to `layout.css`, but `package.json` gained no `@fontsource-variable/noto-sans`; exit status 0.
+- [O] Script: https://github.com/MikeeI/shadcn-svelte-repros/blob/main/cli-scripts/apply-only-font-skips-deps.sh
 
 ## Prior-Art
 
@@ -52,15 +54,13 @@ Contribution fit: New issue — rare trigger; `apply` owns the install decision.
 
 ## Publication-Blockers
 
-- [O] Reproduction run with a font-changing preset.
-- `envinfo` output for the required System Info field.
-- User approval of the exact draft and target.
+None.
 
 ## Next-Action
 
-Summary: Build runnable reproduction
-Action: Run `apply <preset> --only theme font` in the repro template and record the missing package, repository URL, and envinfo in the draft.
-Done-When: The draft contains a working reproduction link, observed result, and envinfo.
+Summary: Await draft approval
+Action: Show the exact draft and target to the user and publish only after approval.
+Done-When: The user approves or rejects the exact current draft and target.
 
 ## Publication-Draft
 
@@ -78,11 +78,28 @@ In `commands/apply/index.ts`, `onlyApplyTheme` is `only?.includes("theme")`, and
 
 ### Reproduction
 
-Pending: repository link.
+https://github.com/MikeeI/shadcn-svelte-repros/blob/main/cli-scripts/apply-only-font-skips-deps.sh
+
+After `init --preset b0`, `apply --preset bGW --only theme font` adds `@import "@fontsource-variable/noto-sans";` to the CSS, but `@fontsource-variable/noto-sans` is not added to `package.json`.
 
 ### System Info
 
-Pending: envinfo output.
+```text
+System:
+  OS: Linux 6.8 Ubuntu 24.04.5 LTS 24.04.5 LTS (Noble Numbat)
+  CPU: (32) x64 AMD Ryzen 9 5950X 16-Core Processor
+  Shell: 5.2.21 - /bin/bash
+Binaries:
+  Node: 26.12.0 - /usr/bin/node
+  npm: 12.2.0 - /usr/bin/npm
+  pnpm: 10.32.1 - /usr/bin/pnpm
+npmPackages:
+  @lucide/svelte: ^1.60.0 => 1.60.0
+  @sveltejs/kit: ^3.0.0 => 3.1.0
+  shadcn-svelte: ^1.7.0 => 1.7.0
+  svelte: ^5.57.1 => 5.57.2
+  tailwindcss: ^4.3.0 => 4.3.3
+```
 
 ### Severity
 

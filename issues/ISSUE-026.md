@@ -1,6 +1,6 @@
 # ISSUE-026 — cli: type stripping replaces the first `.ts` anywhere in the absolute path
 
-State: Investigating
+State: Draft-Ready
 Authorized-Work: Research-and-Reporting
 Publication-Target: New-issue
 External-Reference: Not published.
@@ -26,6 +26,8 @@ Impact [S]: Files are written to a different directory outside the project, with
 - [S] `packages/cli/src/utils/transformers/transform-strip-types.ts:17-19` — `filePath.replace(".ts", ".js")`.
 - [S] `packages/cli/src/utils/add-registry-items.ts:196-201` — `mkdir` and `writeFile` use the returned path.
 - [S] `packages/cli/src/commands/update/index.ts:239-241` — same replace when computing stale files.
+- [O] `shadcn-svelte@1.7.0`, Node 26.12.0: JS project at `$root/my.tsapp`, `init --preset b0` printed `utils installed at src/lib/utils` and `Success!`, but `my.tsapp/src/lib/utils.js` was absent and `$root/my.jsapp/src/lib/utils.ts` was created with `export { cn } from "cn";`.
+- [O] Script: https://github.com/MikeeI/shadcn-svelte-repros/blob/main/cli-scripts/strip-types-path-replace.sh
 
 ## Prior-Art
 
@@ -52,15 +54,13 @@ Use `filePath.replace(/\.ts$/, ".js")` in both places.
 
 ## Publication-Blockers
 
-- [O] Reproduction under a path containing `.ts`.
-- `envinfo` output for the required System Info field.
-- User approval of the exact draft and target.
+None.
 
 ## Next-Action
 
-Summary: Build runnable reproduction
-Action: Run `add utils` in a JS project under a `.ts`-containing path and record the written path, steps, and envinfo in the draft.
-Done-When: The draft contains reproduction steps, observed path, and envinfo.
+Summary: Await draft approval
+Action: Show the exact draft and target to the user and publish only after approval.
+Done-When: The user approves or rejects the exact current draft and target.
 
 ## Publication-Draft
 
@@ -72,17 +72,35 @@ Body:
 ````markdown
 ### Describe the bug
 
-For `"typescript": false`, `transformStripTypes` renames files with `filePath.replace(".ts", ".js")`. `filePath` is absolute, so this replaces the first `.ts` anywhere in the path. In a project under e.g. `~/code/learn.ts-notes/app`, `src/lib/utils.ts` is written to `~/code/learn.js-notes/app/src/lib/utils.ts`, outside the project and still named `.ts`. `update` has the same `replace` when it computes file names.
+For `"typescript": false`, `transformStripTypes` renames files with `filePath.replace(".ts", ".js")`. `filePath` is absolute, so this replaces the first `.ts` anywhere in the path. For a JS project in `/tmp/x/my.tsapp`, `init` prints `utils installed at src/lib/utils`, but writes `/tmp/x/my.jsapp/src/lib/utils.ts`, outside the project and still named `.ts`. `update` has the same `replace` when it computes file names.
 
 **Possible fix:** `filePath.replace(/\.ts$/, ".js")` in both places.
 
 ### Reproduction
 
-Pending: repository link.
+https://github.com/MikeeI/shadcn-svelte-repros/blob/main/cli-scripts/strip-types-path-replace.sh
+
+1. Create a JSDoc SvelteKit project in a directory named `my.tsapp`.
+2. Run `init --preset b0`: it reports success, `my.tsapp/src/lib/utils.js` does not exist, and `../my.jsapp/src/lib/utils.ts` was created.
 
 ### System Info
 
-Pending: envinfo output.
+```text
+System:
+  OS: Linux 6.8 Ubuntu 24.04.5 LTS 24.04.5 LTS (Noble Numbat)
+  CPU: (32) x64 AMD Ryzen 9 5950X 16-Core Processor
+  Shell: 5.2.21 - /bin/bash
+Binaries:
+  Node: 26.12.0 - /usr/bin/node
+  npm: 12.2.0 - /usr/bin/npm
+  pnpm: 10.32.1 - /usr/bin/pnpm
+npmPackages:
+  @lucide/svelte: ^1.60.0 => 1.60.0
+  @sveltejs/kit: ^3.0.0 => 3.1.0
+  shadcn-svelte: ^1.7.0 => 1.7.0
+  svelte: ^5.57.1 => 5.57.2
+  tailwindcss: ^4.3.0 => 4.3.3
+```
 
 ### Severity
 

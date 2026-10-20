@@ -1,6 +1,6 @@
 # ISSUE-017 — cli/css: dark `@custom-variant` is skipped when any other `@custom-variant` exists
 
-State: Investigating
+State: Draft-Ready
 Authorized-Work: Research-and-Reporting
 Publication-Target: New-issue
 External-Reference: Not published.
@@ -27,6 +27,8 @@ Impact [A]: `.dark` CSS variables follow the class while `dark:` utilities follo
 - [S] `packages/cli/src/utils/updaters/update-css-vars.ts:6,23-27` — intended params `dark (&:is(.dark *))` when dark vars exist.
 - [S] `packages/cli/src/tailwind.css` — defines data-state variants but no `dark` variant.
 - [S] `shadcn-ui/ui` `packages/registry/src/updaters/update-css-vars.ts:513-520` — same name-only check; tracked separately as ISSUE-035.
+- [O] `shadcn-svelte@1.7.0`, SvelteKit 3.1.0 + Tailwind 4.3.3, Node 26.12.0: `init --preset b0` on a `layout.css` containing `@custom-variant sidebar-open (&:is(.sidebar-open *));` wrote `.dark { ... }` but no `@custom-variant dark`; the same init on the plain `sv` stylesheet adds it.
+- [O] Repository: https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-variant-dark
 
 ## Prior-Art
 
@@ -34,6 +36,7 @@ Coverage: issues(open+closed), PRs(open+closed+merged) via `gh search` for "cust
 Gaps: discussions, releases, and Discord were not searched.
 
 - `https://github.com/huntabyte/shadcn-svelte/issues/2044` — Distinct; earlier missing dark-mode CSS for Tailwind v4, not this check.
+- `https://github.com/huntabyte/shadcn-svelte/issues/2612` — Related; closed 2026-04-01; the CLI duplicated existing `@custom-variant` rules; [A] the name-only check likely came from that fix and now fails the other way.
 
 Contribution fit: New issue — the CSS updater owns the dark variant insertion.
 
@@ -53,15 +56,13 @@ Match only `custom-variant` rules whose params start with `dark`.
 
 ## Publication-Blockers
 
-- [O] Reproduction with a stylesheet containing another custom variant, as a repository link.
-- `envinfo` output for the required System Info field.
-- User approval of the exact draft and target.
+None.
 
 ## Next-Action
 
-Summary: Build runnable reproduction
-Action: Run `init` on a project whose CSS has `@custom-variant hocus`, then record the missing dark variant, repository URL, and envinfo in the draft.
-Done-When: The draft contains a working reproduction link, observed CSS, and envinfo.
+Summary: Await draft approval
+Action: Show the exact draft and target to the user and publish only after approval.
+Done-When: The user approves or rejects the exact current draft and target.
 
 ## Publication-Draft
 
@@ -79,11 +80,29 @@ Body:
 
 ### Reproduction
 
-Pending: repository link.
+https://github.com/MikeeI/shadcn-svelte-repros/tree/main/cli-custom-variant-dark
+
+`src/routes/layout.css` starts with `@import "tailwindcss";` and `@custom-variant sidebar-open (&:is(.sidebar-open *));`.
+After `pnpm dlx shadcn-svelte@latest init --preset b0 ...` it contains the `.dark { ... }` block, but no `@custom-variant dark (&:is(.dark *));`.
 
 ### System Info
 
-Pending: envinfo output.
+```text
+System:
+  OS: Linux 6.8 Ubuntu 24.04.5 LTS 24.04.5 LTS (Noble Numbat)
+  CPU: (32) x64 AMD Ryzen 9 5950X 16-Core Processor
+  Shell: 5.2.21 - /bin/bash
+Binaries:
+  Node: 26.12.0 - /usr/bin/node
+  npm: 12.2.0 - /usr/bin/npm
+  pnpm: 10.32.1 - /usr/bin/pnpm
+npmPackages:
+  @lucide/svelte: ^1.60.0 => 1.60.0
+  @sveltejs/kit: ^3.0.0 => 3.1.0
+  shadcn-svelte: ^1.7.0 => 1.7.0
+  svelte: ^5.57.1 => 5.57.2
+  tailwindcss: ^4.3.0 => 4.3.3
+```
 
 ### Severity
 
