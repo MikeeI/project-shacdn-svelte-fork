@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: High
 Root-Cause-Confidence: High
 Finding-Category: Correctness
@@ -35,6 +36,7 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - `https://github.com/huntabyte/shadcn-svelte/issues/2617` — Distinct; CLI error for `font-heading` inherit, not the docs provider fallback.
 
 Contribution fit: New contribution — the provider fallback owns the wrong `--font-heading` value.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` `apps/v4/app/(app)/(create)/components/design-system-provider.tsx:90-100` resolves `inherit` to the body font, so shadcn/ui does not share the defect.
 
 ## Proposed-Change
 

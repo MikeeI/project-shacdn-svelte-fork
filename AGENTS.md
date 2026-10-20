@@ -167,6 +167,11 @@ The CLI initializes projects and resolves, transforms, and installs open-code Sv
 - The fork is currently not an independently owned product; maintaining a standalone fork is a user-owned option.
 - Upstream is a port of [shadcn/ui](https://github.com/shadcn-ui/ui); upstream rejects features that shadcn/ui lacks.
 - The user's goals are to report upstream issues, fix them through pull requests, and evaluate a standalone fork.
+- This fork only fixes and reports; it never builds releases, publishes packages, deploys sites, or versions packages.
+- Never run release, publish, deploy, or changeset-version commands, and never add changesets unless upstream requires one.
+- GitHub Actions are disabled on the fork since 2026-10-20 because its workflows only serve upstream releases and deploys.
+- Never re-enable fork Actions; upstream CI still runs on upstream pull requests in the upstream repository.
+- The fork is public on GitHub, so treat everything pushed to it as publicly visible.
 - Route each finding to the project that owns its root cause, not to the project where the symptom appeared.
 - Svelte port, CLI, registry, primitives, and docs-site defects go to `huntabyte/shadcn-svelte`.
 - Defects and features that originate in shadcn/ui design or component source go to `shadcn-ui/ui`.
@@ -188,10 +193,47 @@ The CLI initializes projects and resolves, transforms, and installs open-code Sv
 - Never choose `Authorized-Work` or `Publication-Target` on the user's behalf.
 - `Research-and-Reporting` permits research, issues, and comments but no source implementation.
 - `Pull-Request-Implementation` authorizes only the scoped implementation recorded for that finding.
-- Base upstream contribution branches on current `upstream/main`.
+- Base each contribution branch on the current primary branch of the finding's `Upstream-Repository`.
+- This checkout tracks only shadcn-svelte source; `shadcn-ui/ui` work needs a separate fork clone under `$HOME/projects/`.
 - Keep fork-only context, ledgers, configuration, and personal commits out of upstream contribution diffs.
 - Reproduce claimed bugs against current upstream and run the narrowest conclusive verification.
 - Publish one coherent root cause per issue, comment, or pull request.
+
+## Upstream Project Differences
+
+Facts verified on 2026-10-20 against `huntabyte/shadcn-svelte@ffcd275b` and `shadcn-ui/ui@ba1503c`.
+Re-check contribution guides, issue forms, and workflows before each publication because they change.
+Never apply one project's commands, formats, or rules to the other.
+
+### huntabyte/shadcn-svelte
+
+- Stack: SvelteKit docs in `docs/`, Svelte 5, pnpm workspaces without Turborepo, Oxfmt plus ESLint, Vitest, tsdown.
+- Local checks: `pnpm check`, `pnpm lint`, `pnpm -F shadcn-svelte test`; `postinstall` builds the CLI and syncs the registry.
+- PR CI runs type check, lint, CLI tests on Linux/Windows/macOS, parity tests, and primitives unit and browser tests.
+- Maintainers do not review PRs with red CI or in draft state.
+- Each PR fixes one issue linked as `Fixes #N`; typo-sized fixes may skip the issue.
+- PR titles start with `feat:`, `fix:`, `chore:`, or `docs:`; run `pnpm format` and `pnpm lint` first.
+- PRs opened from a fork's `main` branch are closed automatically; always use a dedicated branch.
+- Non-trivial code changes need a GitHub discussion first; features need a shadcn/ui counterpart and get the `parity` label.
+- Bug issues require a runnable reproduction (StackBlitz template `https://shadcn-svelte.com/repro`), envinfo output, and severity.
+- AI-written issue or PR descriptions get the `slop` label and a rewrite request; the user must write or own the text.
+- Docs deploy to Cloudflare and packages release through Changesets; both run only upstream.
+
+### shadcn-ui/ui
+
+- Stack: Next.js docs app `apps/v4`, React, pnpm workspaces with Turborepo, Prettier plus ESLint, Vitest.
+- The CLI lives in `packages/shadcn`; install and registry logic lives in `packages/registry` (`@shadcn/registry`).
+- Components live in `apps/v4/registry/` per style; changes must cover every style, update docs, and run `pnpm registry:build`.
+- Generated styles are gitignored; a fresh clone needs `pnpm --filter=v4 registry:build --style all` before dev or typecheck.
+- `pnpm test` builds the registry and starts the dev server on `localhost:4000` before running tests.
+- PR CI runs lint, `format:check`, typecheck, a shadcn export check, and a `@shadcn/registry` changeset check.
+- Changes under `packages/registry` require a `@shadcn/registry` changeset.
+- Commits follow `category(scope): message` and MUST be signed; unsigned PRs are labeled and closed after 14 days.
+- Blank issues are disabled; bug forms require affected components, reproduction steps, and system info.
+- Bugs without a CodeSandbox or StackBlitz reproduction may be labeled `please add a reproduction` and closed.
+- New component requests go to GitHub Discussions, not issues.
+- Issues and PRs inactive for one year are marked stale and closed seven days later.
+- The docs deploy on Vercel and packages release through Changesets; both run only upstream.
 
 ## Finding and Contribution Ledger
 

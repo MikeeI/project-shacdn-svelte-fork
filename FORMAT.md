@@ -17,7 +17,8 @@ Current upstream contribution guides, forms, and templates override these generi
 - Apply the contribution decision tree without treating its order as publication authorization.
 - Show the exact current draft and target before publication.
 - Publish only after the user approves that exact draft and target.
-- Verify source claims against the current canonical upstream branch.
+- Verify source claims against the current primary branch of the finding's `Upstream-Repository`.
+- Route each finding by root-cause owner as defined in `AGENTS.md`, never by where the symptom appeared.
 - Keep fork-only tracking content out of upstream contribution diffs.
 
 ## Evidence vocabulary
@@ -51,6 +52,7 @@ Open rows project ID, title, State, Authorized-Work, Publication-Target, and Con
 They also project `Next-Action/Summary` and External-Reference.
 Archived rows project ID, title, Authorized-Work, Publication-Target, and Contribution-Priority.
 They also project Archive-Reason and External-Reference.
+The Finding cell starts with `[owner/repo]` whenever `Upstream-Repository` is not `huntabyte/shadcn-svelte`.
 The issue file is authoritative when a row disagrees with it.
 Correct both in the same task and never leave a known projection mismatch.
 Move archived findings to the archived table without changing their ID or file.
@@ -64,13 +66,19 @@ State: Investigating | Draft-Ready | Implementing | PR-Ready | Submitted | Archi
 Authorized-Work: Research-and-Reporting | Pull-Request-Implementation | Not-Selected
 Publication-Target: New-issue | Existing-issue-comment | New-pull-request | Existing-pull-request-comment | Not-Selected
 External-Reference: <exact external URL or identifier | Not published.>
+Upstream-Repository: huntabyte/shadcn-svelte | shadcn-ui/ui | sveltejs/svelte | sveltejs/kit | Undetermined
 Contribution-Priority: High | Medium | Low
 Root-Cause-Confidence: High | Medium | Low
 Finding-Category: Correctness | Reliability | Performance | Maintainability | API | UI | Build | Test | Other
 Created: <YYYY-MM-DD>
 Updated: <YYYY-MM-DD>
-Source: `upstream/<branch>@<commit>`
+Source: `<upstream/<branch> | owner/repo>@<commit>`
 ```
+
+`Upstream-Repository` names the repository that owns the root cause and receives the publication.
+Use `Undetermined` only while State is Investigating and name the missing routing evidence in `Publication-Blockers`.
+When another repository shares the same defect, record it in `Prior-Art` and open a separate finding for it.
+`Source` records the verified revision; `upstream/<branch>` means `huntabyte/shadcn-svelte`, other repositories use `owner/repo`.
 
 Every issue file contains these sections:
 

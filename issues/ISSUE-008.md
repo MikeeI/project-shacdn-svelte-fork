@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: Medium
 Root-Cause-Confidence: High
 Finding-Category: Correctness
@@ -35,6 +36,8 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - None found for randomize locks.
 
 Contribution fit: New contribution — `randomize()` owns the lock semantics.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` selects locks and base colors independently (`apps/v4/app/(app)/(create)/hooks/use-random.tsx`) but normalizes incompatible theme and chart pairs on read and write (`lib/search-params.ts:174-239,307-342`), so its persisted pairs stay valid.
+Sibling-Candidate: [S] `shadcn-ui/ui@ba1503c` normalization ignores locks and can replace a locked theme or chart color; separate root cause, not yet a finding.
 
 ## Proposed-Change
 

@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: Medium
 Root-Cause-Confidence: High
 Finding-Category: UI
@@ -33,6 +34,7 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - None found for keyboard shortcuts in the design system provider.
 
 Contribution fit: New contribution — the shared keydown handler owns both shortcuts.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` rejects editable targets before undo/redo (`apps/v4/app/(app)/(create)/hooks/use-history.tsx:128-162`, `components/history-buttons.tsx:42-77`), so shadcn/ui does not share the defect.
 
 ## Proposed-Change
 

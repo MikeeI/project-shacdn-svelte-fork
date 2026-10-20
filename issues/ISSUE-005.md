@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: Low
 Root-Cause-Confidence: High
 Finding-Category: UI
@@ -34,6 +35,8 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - None found for the colors page copy highlight.
 
 Contribution fit: New contribution — the clipboard hook owns `lastCopied`.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` sets `lastCopied` on click (`apps/v4/components/color.tsx:26-37`, `apps/v4/hooks/use-colors.ts:24-26`), so shadcn/ui does not share the defect.
+Sibling-Candidate: [S] `shadcn-ui/ui@ba1503c` marks a swatch copied and toasts success even when copying fails (`apps/v4/components/color.tsx:26-37`, `apps/v4/hooks/use-copy-to-clipboard.ts:47-62`); separate root cause, not yet a finding.
 
 ## Proposed-Change
 

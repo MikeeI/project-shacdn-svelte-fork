@@ -6,6 +6,7 @@ Each linked `issues/ISSUE-NNN.md` is the complete authoritative record for one r
 This file owns `Next finding ID` and projects current issue-file state.
 `Next-Action` is the 2–6 word `Next-Action/Summary` projection from the issue record.
 When a row disagrees with its issue file, correct the row from the issue file in the same task.
+Findings target `huntabyte/shadcn-svelte` unless the Finding cell starts with another `[owner/repo]`.
 
 Next finding ID: ISSUE-010
 

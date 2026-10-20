@@ -4,6 +4,7 @@ State: Archived
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: Low
 Root-Cause-Confidence: High
 Finding-Category: Other

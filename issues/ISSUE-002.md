@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: High
 Root-Cause-Confidence: High
 Finding-Category: Correctness
@@ -34,6 +35,7 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - None found for design system undo or radius correction.
 
 Contribution fit: New contribution — the history-tracked `system` write owns the constraint.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` has an analogous radius correction (`apps/v4/app/(app)/(create)/components/design-system-provider.tsx:143-152`) but records settled nuqs URL presets (`hooks/use-history.tsx:21-105`). [A] Whether shadcn/ui hits the same undo trap is unverified; no sibling finding exists.
 
 ## Proposed-Change
 

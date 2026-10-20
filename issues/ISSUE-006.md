@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: Low
 Root-Cause-Confidence: High
 Finding-Category: Reliability
@@ -33,6 +34,7 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - None found for cookie parsing or URIError in the docs.
 
 Contribution fit: New contribution — `parseUserConfig` owns the client cookie read.
+Routing: [S] Still present at `upstream/main@ffcd275b`; SvelteKit 2.70.1 `cookies.get` delegates to `cookie@0.6.0`, which documents keeping undecodable values, so `sveltejs/kit` is not implicated. `shadcn-ui/ui@ba1503c` stores preferences in localStorage (`apps/v4/hooks/use-config.ts:1-18`), so shadcn/ui does not share the defect.
 
 ## Proposed-Change
 

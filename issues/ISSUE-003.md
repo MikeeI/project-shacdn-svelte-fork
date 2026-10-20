@@ -4,6 +4,7 @@ State: PR-Ready
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: Not published.
+Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: High
 Root-Cause-Confidence: High
 Finding-Category: UI
@@ -35,6 +36,7 @@ Gaps: GitHub search was rate-limited once; discussions and releases were not sea
 - `https://github.com/huntabyte/shadcn-svelte/issues/2772` — Related; earlier default-style change to vega.
 
 Contribution fit: New contribution — the provider unmount owns the restore.
+Routing: [S] Still present at `upstream/main@ffcd275b`; `shadcn-ui/ui@ba1503c` mounts its provider only in the iframe preview route (`apps/v4/app/(app)/(create)/components/preview.tsx:168-191`) and its cleanup restores no preset default (`design-system-provider.tsx:154-164`), so shadcn/ui does not share the defect.
 
 ## Proposed-Change
 
