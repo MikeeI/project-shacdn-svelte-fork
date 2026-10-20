@@ -56,7 +56,7 @@ Fall back to `var(--font-sans)` instead of `fonts[0].font.family` when no headin
 ## Publication-Blockers
 
 - User approval of the exact draft and target.
-- Disclosure decision: upstream CONTRIBUTING asks that AI not write issue or PR descriptions, which conflicts with the maintainer-communication AI disclosure footer.
+- Reasoning effort of the investigating sessions is unverified, so the draft omits the fixed `(extra high reasoning effort)` clause.
 
 ## Next-Action
 
@@ -90,4 +90,14 @@ When a preset uses `fontHeading: "inherit"` (the default), the design system pro
 This falls back to `var(--font-sans)` instead.
 
 Repro: open `/preview/preview?preset=b3CC` (Lora, heading inherit) and inspect a heading: before it's Geist, after it's Lora.
+
+### Disclosure
+
+Investigated thoroughly with Claude Opus 5.5, using [Oh My Pi](https://github.com/can1357/oh-my-pi) as the agent framework.
+
+This report is not generic or unreviewed AI-generated output. Its claims were checked against the cited evidence, and it includes the relevant detail intended to help maintainers resolve the issue.
+
+If reports like this are not useful to the project, please let me know and I will refrain from submitting similar ones. My intent is to help without wasting maintainer time or energy or discouraging their work.
+
+Thank you for your work.
 ```
