@@ -3,6 +3,7 @@
 	import CheckIcon from "@tabler/icons-svelte/icons/check";
 	import ChevronDownIcon from "@tabler/icons-svelte/icons/chevron-down";
 	import CopyIcon from "@tabler/icons-svelte/icons/copy";
+	import { toast } from "svelte-sonner";
 	import * as DropdownMenu from "$lib/registry/ui/dropdown-menu/index.js";
 	import * as Popover from "$lib/registry/ui/popover/index.js";
 	import { UseClipboard } from "$lib/hooks/use-clipboard.svelte.js";
@@ -35,6 +36,11 @@ Help me understand how to use it. Be ready to explain concepts, give examples, o
 
 	async function copyPage() {
 		const res = await fetch(`${pageUrl}.md`);
+		// Copying an error response body would put an HTML error page on the clipboard.
+		if (!res.ok) {
+			toast.error("Failed to copy page");
+			return;
+		}
 		const text = await res.text();
 		await clipboard.copy(text);
 	}
