@@ -159,17 +159,18 @@
 	});
 
 	function handleKeyDown(e: KeyboardEvent) {
+		// Typing keeps its native behavior, including the browser's own text undo/redo.
+		if (
+			(e.target instanceof HTMLElement && e.target.isContentEditable) ||
+			e.target instanceof HTMLInputElement ||
+			e.target instanceof HTMLTextAreaElement ||
+			e.target instanceof HTMLSelectElement
+		) {
+			return;
+		}
+
 		// randomize / reset on r/R and shift+R
 		if ((e.key === "r" || e.key === "R") && !e.metaKey && !e.ctrlKey) {
-			if (
-				(e.target instanceof HTMLElement && e.target.isContentEditable) ||
-				e.target instanceof HTMLInputElement ||
-				e.target instanceof HTMLTextAreaElement ||
-				e.target instanceof HTMLSelectElement
-			) {
-				return;
-			}
-
 			e.preventDefault();
 
 			if (e.shiftKey) {
