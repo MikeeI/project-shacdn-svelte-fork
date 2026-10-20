@@ -168,8 +168,8 @@ The CLI initializes projects and resolves, transforms, and installs open-code Sv
 - Upstream is a port of [shadcn/ui](https://github.com/shadcn-ui/ui); upstream rejects features that shadcn/ui lacks.
 - The user's goals are to report upstream issues, fix them through pull requests, and evaluate a standalone fork.
 - This fork only fixes and reports; it never builds releases, publishes packages, deploys sites, or versions packages.
-- Never run release, publish, deploy, or changeset-version commands, and never add changesets unless upstream requires one.
-- GitHub Actions are disabled on the fork since 2026-10-20 because its workflows only serve upstream releases and deploys.
+- Never run release, publish, deploy, or changeset-version commands; add changesets only when upstream requires one.
+- Fork GitHub Actions are disabled since 2026-10-20 because their workflows only serve upstream releases and deploys.
 - Never re-enable fork Actions; upstream CI still runs on upstream pull requests in the upstream repository.
 - The fork is public on GitHub, so treat everything pushed to it as publicly visible.
 - Route each finding to the project that owns its root cause, not to the project where the symptom appeared.
@@ -177,7 +177,7 @@ The CLI initializes projects and resolves, transforms, and installs open-code Sv
 - Defects and features that originate in shadcn/ui design or component source go to `shadcn-ui/ui`.
 - Features absent from shadcn/ui go to `shadcn-ui/ui` first because shadcn-svelte rejects them otherwise.
 - Svelte compiler or runtime defects go to `sveltejs/svelte`, SvelteKit defects to `sveltejs/kit`; tell the user first.
-- Recommend a standalone fork only with evidence such as rejected or stalled upstream fixes and acceptable maintenance cost.
+- Recommend a standalone fork only given evidence like rejected or stalled upstream fixes and acceptable maintenance cost.
 - The `personal` branch owns fork-only context and tracking; `main` mirrors the fork's integration state.
 - `ISSUES.md` provides the compact finding overview and global ID allocator.
 - `issues/ISSUE-NNN.md` owns the complete durable record for one root cause.
@@ -394,8 +394,10 @@ Build the CLI before docs registry generation because that generator invokes `pa
 - Shared CLI fixtures cover full, partial, invalid, and legacy configurations and package-manager detection.
   They also cover colors and Svelte/Tailwind compatibility.
 - Reuse these fixtures instead of inventing one-off setup.
-- Run focused CLI tests with `pnpm -F shadcn-svelte test`.
-  Its `test:setup` first creates and builds the `sv-addons/registry` demo registry.
+- Run focused CLI tests with `pnpm -F shadcn-svelte exec vitest run <test-path>`.
+  This skips `test:setup`; only `test/registry-template.test.ts` reads the `sv-addons/registry` demo.
+- Run full `pnpm -F shadcn-svelte test` when changing `sv-addons/registry/` or the `registry build` command.
+  Its `test:setup` recreates the demo with `sv create`, two network installs, and two builds.
 - Root `pnpm check` covers every workspace package with a `check` script, not `repro`.
 - Review inline snapshot changes manually, especially registry JSON and CSS transformer output.
 - No coverage threshold or coverage command is configured; do not claim coverage guarantees from test count alone.
