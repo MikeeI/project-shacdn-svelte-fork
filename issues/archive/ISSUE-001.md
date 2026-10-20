@@ -1,6 +1,6 @@
 # ISSUE-001 — docs/create: `inherit` heading font renders in Geist
 
-State: Submitted
+State: Archived
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
 External-Reference: https://github.com/huntabyte/shadcn-svelte/pull/2931
@@ -59,9 +59,9 @@ None.
 
 ## Next-Action
 
-Summary: Monitor PR review
-Action: Respond to maintainer review on https://github.com/huntabyte/shadcn-svelte/pull/2931 with new evidence or requested changes only.
-Done-When: The PR is merged or closed and the record is archived.
+Summary: —
+Action: None.
+Done-When: None.
 
 ## Pull-Request-Implementation
 
@@ -100,3 +100,10 @@ If reports like this are not useful to the project, please let me know and I wil
 
 Thank you for your work.
 ```
+
+## Archive
+
+Archive-Reason: Merged
+Detail: None.
+Evidence: https://github.com/huntabyte/shadcn-svelte/pull/2931 merged 2026-10-20T17:41:30Z as `160547e7c58f17f7b219503244ce0be01abe708e`.
+Checked: 2026-10-20
