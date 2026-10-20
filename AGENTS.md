@@ -381,6 +381,7 @@ Build the CLI before docs registry generation because that generator invokes `pa
 - Oxfmt is the active formatter.
 - Use repository scripts instead of invoking SvelteKit, Vite, ESLint, Vitest, or generators through ad hoc wrappers.
 - Do not edit build, `.svelte-kit`, `dist`, generated registry, or generated docs outputs by hand.
+- Agents may install any program or tool a task needs, such as global pnpm or Playwright browsers, without asking first.
 
 ## Testing & QA
 
