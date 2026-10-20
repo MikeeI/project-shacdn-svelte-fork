@@ -8,7 +8,7 @@ This file owns `Next finding ID` and projects current issue-file state.
 When a row disagrees with its issue file, correct the row from the issue file in the same task.
 Findings target `huntabyte/shadcn-svelte` unless the Finding cell starts with another `[owner/repo]`.
 
-Next finding ID: ISSUE-036
+Next finding ID: ISSUE-041
 
 ## Open-Findings
 
@@ -47,6 +47,11 @@ Next finding ID: ISSUE-036
 | [ISSUE-033](issues/ISSUE-033.md) | cli/preset: v1 preset codes lose their colored chart palette | Investigating | Research-and-Reporting | New-issue | Low | Verify with v1 preset | Not published. |
 | [ISSUE-034](issues/ISSUE-034.md) | registry/ui/field: `FieldError` shows duplicate messages that shadcn/ui deduplicates | Investigating | Research-and-Reporting | New-issue | Low | Build runnable reproduction | Not published. |
 | [ISSUE-035](issues/ISSUE-035.md) | [shadcn-ui/ui] CLI: dark `@custom-variant` is skipped when any other `@custom-variant` exists | Investigating | Research-and-Reporting | New-issue | Low | Verify shadcn/ui behavior | Not published. |
+| [ISSUE-036](issues/ISSUE-036.md) | docs: superseded color, theme, and block-schema modules have no consumers | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-037](issues/ISSUE-037.md) | docs: orphaned demo cards, examples barrel, and helper components have no importers | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-038](issues/ISSUE-038.md) | docs/charts: every chart-type page inlines all 70 highlighted chart blocks | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-039](issues/ISSUE-039.md) | registry build: per-style rewrite transforms every example although the output drops them | Investigating | Research-and-Reporting | New-issue | Low | Measure registry build time | Not published. |
+| [ISSUE-040](issues/ISSUE-040.md) | cli: `parseStyleCss` copy the parity README says to keep in sync has no caller | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
 
 ## Archived-Findings
 
