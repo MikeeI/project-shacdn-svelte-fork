@@ -26,13 +26,20 @@
 	const MANAGED_BODY_CLASS_PREFIXES = ["style-", "base-color-"] as const;
 
 	// `classList.forEach` skips entries when removing during iteration, so snapshot first.
-	function removeManagedBodyClasses(body: HTMLElement) {
+	function removeManagedBodyClasses(body: HTMLElement): string[] {
+		const removed: string[] = [];
 		for (const className of Array.from(body.classList)) {
 			if (MANAGED_BODY_CLASS_PREFIXES.some((prefix) => className.startsWith(prefix))) {
 				body.classList.remove(className);
+				removed.push(className);
 			}
 		}
+		return removed;
 	}
+
+	// The site's own style classes (e.g. `style-nova` from app.html), captured before the first
+	// preset is applied so unmounting can hand the document back unchanged.
+	let siteBodyClasses: string[] | null = null;
 
 	const effectiveRadius = $derived(designSystem.style === "lyra" ? "none" : designSystem.radius);
 
@@ -75,7 +82,8 @@
 		const body = document.body;
 
 		// Update style / base color classes in place (remove old, add new).
-		removeManagedBodyClasses(body);
+		const removed = removeManagedBodyClasses(body);
+		siteBodyClasses ??= removed;
 		body.classList.add(`style-${designSystem.style}`);
 		body.classList.add(`base-color-${designSystem.baseColor}`);
 
@@ -135,12 +143,14 @@
 	let stopMenuSync: (() => void) | null = null;
 
 	// The provider only lives on the design-system routes. When it unmounts (e.g. navigating
-	// from /create to the docs) restore the document to the default style so the rest of the
-	// site is not left wearing the last preset.
+	// from /create to the docs) restore the site's own style classes so the rest of the site is
+	// not left wearing the last preset.
 	onDestroy(() => {
 		if (!browser) return;
-		removeManagedBodyClasses(document.body);
-		document.body.classList.add(`style-${DEFAULT_CONFIG.style}`);
+		if (siteBodyClasses) {
+			removeManagedBodyClasses(document.body);
+			document.body.classList.add(...siteBodyClasses);
+		}
 		document.getElementById(uid)?.remove();
 		document.documentElement.style.removeProperty("--font-sans");
 		document.documentElement.style.removeProperty("--font-heading");
