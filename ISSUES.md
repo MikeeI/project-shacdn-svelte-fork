@@ -8,7 +8,7 @@ This file owns `Next finding ID` and projects current issue-file state.
 When a row disagrees with its issue file, correct the row from the issue file in the same task.
 Findings target `huntabyte/shadcn-svelte` unless the Finding cell starts with another `[owner/repo]`.
 
-Next finding ID: ISSUE-041
+Next finding ID: ISSUE-065
 
 ## Open-Findings
 
@@ -52,6 +52,30 @@ Next finding ID: ISSUE-041
 | [ISSUE-038](issues/ISSUE-038.md) | docs/charts: every chart-type page inlines all 70 highlighted chart blocks | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
 | [ISSUE-039](issues/ISSUE-039.md) | registry build: per-style rewrite transforms every example although the output drops them | Investigating | Research-and-Reporting | New-issue | Low | Measure registry build time | Not published. |
 | [ISSUE-040](issues/ISSUE-040.md) | cli: `parseStyleCss` copy the parity README says to keep in sync has no caller | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-041](issues/ISSUE-041.md) | cli/init: `--base-color` is accepted but ignored | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-042](issues/ISSUE-042.md) | cli/transformers: two `IconPlaceholder`s with the same icon emit a duplicate import | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-043](issues/ISSUE-043.md) | cli/registry build: `--cwd` resolves `registry.json` but reads item files from the process directory | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-044](issues/ISSUE-044.md) | cli/registry build: pnpm `catalog:` versions are emitted as `pkg@catalog:` | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-045](issues/ISSUE-045.md) | cli/update: installed items are detected only as directories, so flat hooks are never found | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-046](issues/ISSUE-046.md) | sv-addons/sv: `execFileSync` without a shell cannot run `.cmd` package-manager shims on Windows | Investigating | Research-and-Reporting | New-issue | Medium | Verify on Windows | Not published. |
+| [ISSUE-047](issues/ISSUE-047.md) | primitives/message-scroller: scroll-to-end button stays inactive after `autoScroll` is turned off | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-048](issues/ISSUE-048.md) | primitives/message-scroller: replacing a keyed row jumps to an old initial `scrollAnchor` | Draft-Ready | Research-and-Reporting | New-issue | Medium | Await draft approval | Not published. |
+| [ISSUE-049](issues/ISSUE-049.md) | primitives/message-scroller: scrolling without wheel, touch, or key events does not release the anchor hold | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-050](issues/ISSUE-050.md) | parity: `fix` copies tokens from a `parity-ignore` fragment into the patched fragment | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-051](issues/ISSUE-051.md) | parity: class extraction drops strings with negative or unlisted utilities | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-052](issues/ISSUE-052.md) | parity: arbitrary `calc()` normalization rewrites hyphens inside custom property names | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-053](issues/ISSUE-053.md) | cli/transformers: JS projects run the TypeScript stripper on non-code files | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-054](issues/ISSUE-054.md) | cli/css: `cssVars` keys with a leading `--` produce `var(----name)` in `@theme inline` | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-055](issues/ISSUE-055.md) | cli/css: string `css` values are appended again on every install | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-056](issues/ISSUE-056.md) | cli/css: nested `&` selectors only apply to the last selector of a list | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-057](issues/ISSUE-057.md) | cli/registry build: `overrideDependencies` is not applied to detected peer dependencies | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-058](issues/ISSUE-058.md) | cli+parity: SIGINT and SIGTERM exit with status 0 | Investigating | Research-and-Reporting | New-issue | Low | Decide publication value | Not published. |
+| [ISSUE-059](issues/ISSUE-059.md) | primitives/questionnaire: a skipped uncontrolled item keeps its text and `data-filled` but leaves FormData | Investigating | Research-and-Reporting | New-issue | Low | Decide publication value | Not published. |
+| [ISSUE-060](issues/ISSUE-060.md) | cli/auto-detect: any path containing `.git` disables CSS auto-detection | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-061](issues/ISSUE-061.md) | cli/apply: positional preset prints `Applied preset undefined` | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-062](issues/ISSUE-062.md) | cli/update: unknown component names silently fall back to the interactive picker | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-063](issues/ISSUE-063.md) | cli/registry build: the `components` alias replaces imports that belong to the nested `ui` alias | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
+| [ISSUE-064](issues/ISSUE-064.md) | cli/transformers: menu and font class transforms skip markup inside `{#if}`/`{#each}` blocks | Draft-Ready | Research-and-Reporting | New-issue | Low | Await draft approval | Not published. |
 
 ## Archived-Findings
 
