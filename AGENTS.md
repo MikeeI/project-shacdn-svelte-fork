@@ -150,13 +150,29 @@ This is the shadcn-svelte monorepo.
 It contains the `shadcn-svelte` CLI, unstyled primitives, `sv` add-ons, a parity checker, the docs site, and fixtures.
 The CLI initializes projects and resolves, transforms, and installs open-code Svelte components from registries.
 
+## User Context and Answer Correctness
+
+- The user owns this fork but has limited shadcn/ui, shadcn-svelte, Svelte, and SvelteKit expertise.
+- The user relies on agents for domain judgment, so correct answers are mission-critical.
+- Never present guesses, memory, or unverified claims as facts; verify against current source, docs, or a reproduction.
+- Mark material claims as verified, inferred, or unknown, and name the evidence that would close each gap.
+- Explain shadcn- and Svelte-specific reasoning plainly enough for the user to review and own every submission.
+- Challenge user assumptions with evidence instead of following them into a wrong report or fix.
+- Prefer reporting "not a bug" or "wrong project" over publishing a weak or misrouted finding.
+
 ## Fork & Upstream Contribution Intent
 
 - Official upstream: [huntabyte/shadcn-svelte](https://github.com/huntabyte/shadcn-svelte).
 - This checkout is the [MikeeI/project-shacdn-svelte-fork](https://github.com/MikeeI/project-shacdn-svelte-fork) fork.
-- The fork is not an independently owned product.
+- The fork is currently not an independently owned product; maintaining a standalone fork is a user-owned option.
 - Upstream is a port of [shadcn/ui](https://github.com/shadcn-ui/ui); upstream rejects features that shadcn/ui lacks.
-- The goal is to support upstream with evidence-backed issues, comments, and pull requests.
+- The user's goals are to report upstream issues, fix them through pull requests, and evaluate a standalone fork.
+- Route each finding to the project that owns its root cause, not to the project where the symptom appeared.
+- Svelte port, CLI, registry, primitives, and docs-site defects go to `huntabyte/shadcn-svelte`.
+- Defects and features that originate in shadcn/ui design or component source go to `shadcn-ui/ui`.
+- Features absent from shadcn/ui go to `shadcn-ui/ui` first because shadcn-svelte rejects them otherwise.
+- Svelte compiler or runtime defects go to `sveltejs/svelte`, SvelteKit defects to `sveltejs/kit`; tell the user first.
+- Recommend a standalone fork only with evidence such as rejected or stalled upstream fixes and acceptable maintenance cost.
 - The `personal` branch owns fork-only context and tracking; `main` mirrors the fork's integration state.
 - `ISSUES.md` provides the compact finding overview and global ID allocator.
 - `issues/ISSUE-NNN.md` owns the complete durable record for one root cause.
