@@ -9,7 +9,7 @@ Contribution-Priority: High
 Root-Cause-Confidence: High
 Finding-Category: Build
 Created: 2026-10-20
-Updated: 2026-10-20
+Updated: 2026-10-21
 Source: `upstream/main@160547e7`
 
 ## Root-Cause
@@ -30,6 +30,10 @@ Impact [S]: The CLI installs blocks into the components alias, so `../ui/...` re
 - [S] `packages/cli/src/commands/registry/build.ts:228-239` — `transformAliases` rewrites aliases only.
 - [S] `packages/cli/src/utils/registry/index.ts:215-217` — blocks and components install into `resolvedPaths.components`.
 - [O] `https://github.com/MikeeI/shadcn-svelte-repros/tree/main/blocks-relative-ui-imports` → after `add calendar-12 chart-area-interactive chart-pie-interactive`, `pnpm build` fails with three `UNRESOLVED_IMPORT` errors for the `../ui/...` paths; environment=`shadcn-svelte@1.7.0`, Node 26.12.0, Linux x64.
+- [O] 2026-10-21: `@ieedan/label@0.0.1 --dry-run`, full label policy, and existing issue conversation used TypeSafe `jev-1.13.0`.
+- [O] Original description scored `slop=0.82,0.80`; the approved revision scored `0.47,0.48`, below the `0.60` application threshold.
+- [O] The user approved the exact revision before publication; GitHub's saved body matched the approved text after editing.
+- [O] The title and existing `contributions welcome`, `cli`, and `slop` labels remained unchanged after the edit.
 
 ## Prior-Art
 
@@ -62,11 +66,13 @@ None.
 
 ## Next-Action
 
-Summary: Monitor issue response
-Action: Answer maintainer questions on https://github.com/huntabyte/shadcn-svelte/issues/2933 with new evidence only.
+Summary: Monitor revised issue response
+Action: Monitor https://github.com/huntabyte/shadcn-svelte/issues/2933 and answer maintainer questions with new evidence only.
 Done-When: The issue is closed or a fix is merged, and the record is archived.
 
 ## Publication-Draft
+
+Historical initial draft, retained verbatim; `Submitted-Text` below owns the current published description.
 
 Target: `huntabyte/shadcn-svelte` new issue in the `3-bug_report.yml` field order, created with `gh issue create`; Severity `annoyance`; disclosure is the final section.
 Title: `calendar-12`, `chart-area-interactive` and `chart-pie-interactive` blocks ship relative `../ui/` imports that break after install
@@ -141,4 +147,38 @@ This report is not generic or unreviewed AI-generated output. Its claims were ch
 If reports like this are not useful to the project, please let me know and I will refrain from submitting similar ones. My intent is to help without wasting maintainer time or energy or discouraging their work.
 
 Thank you for your work.
+````
+
+## Submitted-Text
+
+Target: Replace the description of https://github.com/huntabyte/shadcn-svelte/issues/2933; leave its title unchanged.
+Approval: The user approved the complete revised text via `q1 ha` on 2026-10-21.
+Publication: `gh issue edit 2933 --repo huntabyte/shadcn-svelte --body-file <approved-body-file>` succeeded.
+Verification: GitHub API confirmed the saved body matches the approved text.
+System Info, Severity, and the disclosure footer are omitted under the repository's user-directed publication format.
+The existing `slop` label was not removed; no comment or label change was requested.
+
+Body:
+
+````markdown
+### Describe the bug
+
+`pnpm build` fails after adding `calendar-12`, `chart-area-interactive` and `chart-pie-interactive`.
+Their `../ui/` imports point to `src/lib/ui/` instead of the installed components in `src/lib/components/ui/`.
+`calendar-12` is also missing `range-calendar` from its registry dependencies.
+
+### Reproduction
+
+https://github.com/MikeeI/shadcn-svelte-repros/tree/main/blocks-relative-ui-imports
+
+The broken files are committed in the repro (installed with CLI 1.7.0).
+Run `pnpm install` and `pnpm build` in that directory.
+
+### Logs
+
+```text
+[UNRESOLVED_IMPORT] Could not resolve '../ui/range-calendar/range-calendar.svelte' in src/lib/components/calendar-12.svelte
+[UNRESOLVED_IMPORT] Could not resolve '../ui/chart/chart-container.svelte' in src/lib/components/chart-area-interactive.svelte
+[UNRESOLVED_IMPORT] Could not resolve '../ui/chart/chart-style.svelte' in src/lib/components/chart-pie-interactive.svelte
+```
 ````
