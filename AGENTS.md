@@ -181,13 +181,13 @@ The CLI initializes projects and resolves, transforms, and installs open-code Sv
 - The `personal` branch owns fork-only context and tracking; `main` mirrors the fork's integration state.
 - `ISSUES.md` provides the compact finding overview and global ID allocator.
 - `issues/ISSUE-NNN.md` owns the complete durable record for one root cause.
-- `FORMAT.md` owns research, drafting, implementation authorization, approval, and publication rules.
+- `FORMAT.md` owns research, drafting, implementation authorization, approval, and generic publication rules.
 - Prefer small, well-scoped corrections with outsized maintainer or user value.
 - Recommend a pull request when a bounded verified fix is ready and no active implementation owns it.
 - Otherwise recommend a comment, a new issue, or continued investigation according to the evidence.
 - Apply `skill-fork-contribution-tracking` for ledger, lifecycle, personal-branch, and upstream handoff work.
 - Apply `skill-maintainer-communication` before external issues, pull requests, reviews, comments, or discussions.
-- Search existing work first and follow current upstream templates and disclosure rules.
+- Follow current upstream templates and disclosure rules except for the explicit publication-format overrides below.
 - Apply `skill-semantic-compression-3` when authoring or restructuring tracking content.
 - Apply `skill-git-commit-format` while respecting explicit upstream contribution conventions.
 - Never choose `Authorized-Work` or `Publication-Target` on the user's behalf.
@@ -240,7 +240,7 @@ Never apply one project's commands, formats, or rules to the other.
 - At the start of every agent session, agents MUST read root `ISSUES.md` before repository work.
 - `ISSUES.md` owns the global `Next finding ID` allocator and compact cross-finding overview.
 - Each `issues/ISSUE-NNN.md` owns one finding's state, evidence, drafts, and next action.
-- `FORMAT.md` is authoritative for research, drafting, implementation boundaries, and publication format.
+- `FORMAT.md` owns research and lifecycle contracts; the publication-format section below owns this fork's explicit overrides.
 - Before adding a finding, search the index and every relevant issue record for the same symptom or root cause.
 - New findings MUST use `Next finding ID`.
 - Create the issue file, add its index row, and increment the allocator together.
@@ -274,6 +274,30 @@ Fork commits, pushes, tracking updates, and source implementation follow the act
 Upstream `CONTRIBUTING.md` requires each PR to fix a single issue linked as `Fixes #N`; small fixes may skip the issue.
 Upstream PR titles use the prefix `feat:`, `fix:`, `chore:`, or `docs:`; run `pnpm format` and `pnpm lint` first.
 Upstream asks contributors not to have AI write issue and PR descriptions; keep drafts short and factual.
+
+### Publication format for huntabyte/shadcn-svelte
+
+Keep complete research and evidence in internal finding records; publish only what helps reproduce and resolve the defect.
+This section overrides generic publication shapes in `FORMAT.md` and standard disclosure footers from contribution skills.
+It applies only to `huntabyte/shadcn-svelte`; publication approval and evidence requirements remain unchanged.
+
+Use these bug-issue sections in order:
+
+1. **Describe the bug:** identify the affected action or component, actual behavior, and expected behavior.
+2. **Reproduction:** provide one runnable reproduction link, necessary steps, and relevant tested versions or platform constraints.
+3. **Logs:** include the smallest useful error excerpt; omit equivalent repetitions.
+
+- Omit `System Info` and `Severity` entirely, including collapsed sections and generic `envinfo` dumps.
+- Keep environment details only when needed to reproduce the defect, under `Reproduction`.
+- These omissions are user-directed and intentionally differ from upstream's required System Info and Severity fields.
+- Do not invent environment data or claim that the reduced format satisfies every upstream form requirement.
+- Include source diagnosis only when verified and materially useful; keep detailed implementation plans internal.
+- Omit model names, reasoning levels, agent-framework attribution, and standardized disclosure or courtesy footers.
+- Omit assurances such as "thoroughly investigated" or "not generic AI output" and internal evidence labels or priorities.
+- Preserve material uncertainty and limitations when shortening descriptions.
+- Never misrepresent authorship or human review; upstream permits translating the user's own description.
+- Shorter wording does not guarantee avoidance or automatic removal of the `slop` label.
+- Do not rewrite existing public submissions or stored exact drafts without separate authorization.
 
 ## Architecture & Data Flow
 
