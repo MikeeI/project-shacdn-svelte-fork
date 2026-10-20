@@ -65,13 +65,13 @@ CLI and UI code parse input and present output only.
 Application and use-case code coordinate workflows.
 Domain code owns business rules, policy, invariants, state transitions, and project-owned meanings.
 Infrastructure owns external APIs, storage, serialization boundaries, transport, and framework glue.
-Do not mix parsing, presentation, config lookup, transport, persistence, validation, orchestration, and domain decisions.
+Do not mix parsing, presentation, config lookup, transport, persistence, validation, orchestration, or domain decisions.
 Do not create pass-through wrappers that add names without reducing responsibility.
 
 SSOT is mandatory.
 Every action-changing decision needs exactly one authoritative owner and one path to change it.
 This includes domain rules, config values, domain constants, schema fields, endpoints, and protocol rules.
-It also includes retries, timeouts, paths, feature flags, permissions, persistence invariants, and migration assumptions.
+It also includes retries, timeouts, paths, feature flags, permissions, persistence invariants, and migration rules.
 CLI grammar, JSON output contracts, mappings, validation, error classification, and user-visible behavior also qualify.
 Consumers must reference the owner.
 They must not copy literals, shadow defaults, reinterpret contracts, duplicate structures, or restate mappings.
@@ -85,7 +85,7 @@ Remove or centralize duplicated domain rules, config defaults, path resolution, 
 Apply the same rule to payload builders, encoders, schemas, endpoints, permissions, command grammar, and output shaping.
 Persistence assumptions and mapping tables also require one owner.
 Do not hide duplication behind a generic helper that nobody owns.
-Add abstractions only when they remove duplicated knowledge, clarify ownership, isolate volatility, or protect invariants.
+Add abstractions only when they remove duplicated knowledge, clarify ownership, isolate volatility, or guard invariants.
 
 KISS is mandatory.
 Use the simplest complete design that preserves correctness, observability, and future maintainability.
@@ -114,7 +114,8 @@ Function defaults must reference named constants, not magic literals.
 Inline literals are allowed only for language idioms, loop mechanics, empty values, or truly local values.
 
 Boundary ownership is mandatory.
-Parsing, validation, normalization, serialization, persistence, transport, retries, caching, and diagnostics need owners.
+Parsing, validation, normalization, serialization, persistence, transport, retries, and caching need owners.
+Diagnostics need an owner too.
 External API adaptation must live at the boundary that owns the external contract.
 Domain and application code should consume project-owned types and errors, not third-party or framework shapes.
 Do not spread boundary-specific assumptions through callers.
@@ -126,7 +127,8 @@ Application code decides workflow consequences.
 CLI and UI map outcomes to text, exit codes, HTTP responses, or UI states.
 Do not duplicate error classification or output mapping across callsites.
 
-Before adding or changing a helper, interface, package, module, config key, constant, DTO, schema, or mapping, find its owner.
+Find the owner before adding or changing a helper, interface, package, module, or config key.
+Find the owner before adding or changing a constant, DTO, schema, or mapping as well.
 Apply the same test to dependencies, fallbacks, abstractions, caches, retry policies, validation, and boundary adapters.
 Identify what will make it change and what duplicated knowledge it removes.
 Identify the invariant it protects and the caller states that must remain distinguishable.
@@ -148,20 +150,95 @@ This is the shadcn-svelte monorepo.
 It contains the `shadcn-svelte` CLI, unstyled primitives, `sv` add-ons, a parity checker, the docs site, and fixtures.
 The CLI initializes projects and resolves, transforms, and installs open-code Svelte components from registries.
 
+## Fork & Upstream Contribution Intent
+
+- Official upstream: [huntabyte/shadcn-svelte](https://github.com/huntabyte/shadcn-svelte).
+- This checkout is the [MikeeI/project-shacdn-svelte-fork](https://github.com/MikeeI/project-shacdn-svelte-fork) fork.
+- The fork is not an independently owned product.
+- Upstream is a port of [shadcn/ui](https://github.com/shadcn-ui/ui); upstream rejects features that shadcn/ui lacks.
+- The goal is to support upstream with evidence-backed issues, comments, and pull requests.
+- The `personal` branch owns fork-only context and tracking; `main` mirrors the fork's integration state.
+- `ISSUES.md` provides the compact finding overview and global ID allocator.
+- `issues/ISSUE-NNN.md` owns the complete durable record for one root cause.
+- `FORMAT.md` owns research, drafting, implementation authorization, approval, and publication rules.
+- Prefer small, well-scoped corrections with outsized maintainer or user value.
+- Recommend a pull request when a bounded verified fix is ready and no active implementation owns it.
+- Otherwise recommend a comment, a new issue, or continued investigation according to the evidence.
+- Apply `skill-fork-contribution-tracking` for ledger, lifecycle, personal-branch, and upstream handoff work.
+- Apply `skill-maintainer-communication` before external issues, pull requests, reviews, comments, or discussions.
+- Search existing work first and follow current upstream templates and disclosure rules.
+- Apply `skill-semantic-compression-3` when authoring or restructuring tracking content.
+- Apply `skill-git-commit-format` while respecting explicit upstream contribution conventions.
+- Never choose `Authorized-Work` or `Publication-Target` on the user's behalf.
+- `Research-and-Reporting` permits research, issues, and comments but no source implementation.
+- `Pull-Request-Implementation` authorizes only the scoped implementation recorded for that finding.
+- Base upstream contribution branches on current `upstream/main`.
+- Keep fork-only context, ledgers, configuration, and personal commits out of upstream contribution diffs.
+- Reproduce claimed bugs against current upstream and run the narrowest conclusive verification.
+- Publish one coherent root cause per issue, comment, or pull request.
+
+## Finding and Contribution Ledger
+
+- At the start of every agent session, agents MUST read root `ISSUES.md` before repository work.
+- `ISSUES.md` owns the global `Next finding ID` allocator and compact cross-finding overview.
+- Each `issues/ISSUE-NNN.md` owns one finding's state, evidence, drafts, and next action.
+- `FORMAT.md` is authoritative for research, drafting, implementation boundaries, and publication format.
+- Before adding a finding, search the index and every relevant issue record for the same symptom or root cause.
+- New findings MUST use `Next finding ID`.
+- Create the issue file, add its index row, and increment the allocator together.
+- Finding IDs use `ISSUE-NNN`, start at `ISSUE-001`, and remain permanent.
+- Never reuse, renumber, or scope IDs by subsystem, status, session, or contribution type.
+- Update the issue file and `ISSUES.md` together after any field, action, or reference change.
+- Every issue record MUST use the field and section contract in `FORMAT.md`.
+- New findings start with `State: Investigating`.
+- New findings start with `Authorized-Work: Not-Selected` and `Publication-Target: Not-Selected`.
+- New findings use `External-Reference: Not published.` until an external reference exists.
+- Keep findings Investigating until currentness, prior art, impact, and correction value are evidence-backed.
+- Clone detectors, AST matches, text similarity, shared names, and TODOs produce candidates only.
+- A duplication finding requires shared change pressure, realistic drift, and simpler consolidation.
+- The user selects `Authorized-Work` for each finding.
+- `Research-and-Reporting` MUST NOT implement the finding.
+- `Pull-Request-Implementation` MAY implement only the recorded scope after research resolves callers and failure modes.
+- Pull-request work MUST verify behavior, commit, push, and reach `PR-Ready` before publication.
+- Show the exact draft and target before publishing an issue, comment, or pull request to official upstream.
+- Publish to official upstream only after the user approves the exact current draft and target.
+- Any draft or target change requires showing the complete current draft and target again before publication.
+- Run the read-only validator bundled with `skill-fork-contribution-tracking` after every ledger mutation.
+- Record the final external URL in `External-Reference` immediately after publication.
+- Keep `FORMAT.md`, `ISSUES.md`, `issues/`, and fork-only `AGENTS.md` changes out of upstream contribution diffs.
+
+### External publication approval
+
+Only an external issue, comment, review, discussion, or pull request write is approval-gated.
+Before publication, read current contribution guidance and explain applicable project policy.
+The human must be able to review and own every submission statement.
+Fork commits, pushes, tracking updates, and source implementation follow the active repository contract.
+Upstream `CONTRIBUTING.md` requires each PR to fix a single issue linked as `Fixes #N`; small fixes may skip the issue.
+Upstream PR titles use the prefix `feat:`, `fix:`, `chore:`, or `docs:`; run `pnpm format` and `pnpm lint` first.
+Upstream asks contributors not to have AI write issue and PR descriptions; keep drafts short and factual.
+
 ## Architecture & Data Flow
 
-- `packages/cli/src/index.ts` is the Commander entry point; it registers `add`, `apply`, `init`, `update`, and `registry`, enforces Node 20+, and handles termination signals.
+- `packages/cli/src/index.ts` is the Commander entry point.
+  It registers `add`, `apply`, `init`, `update`, and `registry`, enforces Node 20+, and handles termination signals.
 - Command handlers converge on `packages/cli/src/utils/add-registry-items.ts`.
-  It fetches the registry index, resolves dependencies recursively, fetches and validates items, prompts for overwrites, transforms and writes files, and merges CSS and dependency changes.
+  It fetches the registry index, resolves dependencies recursively, and fetches and validates items.
+  It prompts for overwrites, transforms and writes files, and merges CSS and dependency changes.
 - `packages/cli/src/utils/registry/` owns network access, proxy handling, concurrent fetches, and dependency resolution.
-- `packages/cli/src/utils/registry/schema.ts` is the single owner of registry Zod schemas; `packages/cli/src/schema/index.ts` re-exports it as the published `shadcn-svelte/schema` entry.
-- `packages/cli/src/utils/config/` reads and validates `components.json`, synchronizes SvelteKit metadata, and resolves aliases from TypeScript configuration.
-- `packages/cli/src/utils/transformers/` transforms imports, icons, menus, fonts, and optional TypeScript removal; extend this pipeline rather than adding command-specific rewrites.
-- `packages/primitives/` publishes `@shadcn-svelte/primitives`, unstyled components that registry items declare as dependencies.
+- `packages/cli/src/utils/registry/schema.ts` is the single owner of registry Zod schemas.
+  `packages/cli/src/schema/index.ts` re-exports it as the published `shadcn-svelte/schema` entry.
+- `packages/cli/src/utils/config/` reads and validates `components.json`.
+  It also synchronizes SvelteKit metadata and resolves aliases from TypeScript configuration.
+- `packages/cli/src/utils/transformers/` transforms imports, icons, menus, fonts, and optional TypeScript removal.
+  Extend this pipeline rather than adding command-specific rewrites.
+- `packages/primitives/` publishes `@shadcn-svelte/primitives`.
+  Registry items declare these unstyled components as dependencies.
 - `sv-addons/sv/` (`@shadcn-svelte/sv`) is an `sv` add-on that initializes shadcn-svelte and adds components.
-- `sv-addons/registry/` (`@shadcn-svelte/registry`) is an `sv` add-on that scaffolds a custom-registry template from `sv-addons/registry/template/`.
+- `sv-addons/registry/` (`@shadcn-svelte/registry`) is an `sv` add-on that scaffolds a custom-registry template.
+  The template lives in `sv-addons/registry/template/`.
 - `packages/parity/` (private) compares shadcn-svelte registry classes against upstream shadcn/ui.
-- The docs registry build scans `docs/src/lib/registry/`, invokes the built CLI, and writes generated registry JSON and metadata consumed by the site and downstream registries.
+- The docs registry build scans `docs/src/lib/registry/` and invokes the built CLI.
+  It writes generated registry JSON and metadata consumed by the site and downstream registries.
 
 Keep command orchestration thin.
 Put reusable registry, configuration, transformation, and filesystem behavior in the existing utility owners.
@@ -205,9 +282,11 @@ Build the CLI before docs registry generation because that generator invokes `pa
 ## Code Conventions & Common Patterns
 
 - Use TypeScript and ES modules.
-- `oxfmt.config.ts` specifies tabs, double quotes, 100-column code, ES5 trailing commas, sorted imports, and sorted Tailwind classes in `cn`, `clsx`, and `tv` calls.
+- `oxfmt.config.ts` specifies tabs, double quotes, 100-column code, ES5 trailing commas, and sorted imports.
+  It also sorts Tailwind classes in `cn`, `clsx`, and `tv` calls.
 - Prefix intentionally unused parameters or variables with `_`; ESLint otherwise reports unused TypeScript names.
-- Validate untrusted configuration and registry data with the schema owned by that boundary; do not duplicate registry schemas outside `packages/cli/src/utils/registry/schema.ts`.
+- Validate untrusted configuration and registry data with the schema owned by that boundary.
+  Do not duplicate registry schemas outside `packages/cli/src/utils/registry/schema.ts`.
 - Use `CLIError` or `ConfigError` and the existing `error(cause)`/`handleError` path for CLI failures.
 - Do not swallow failures or introduce a parallel error-reporting convention.
 - Prefer async functions and `Promise.all` for independent registry fetches.
@@ -247,13 +326,19 @@ Build the CLI before docs registry generation because that generator invokes `pa
 
 ## Testing & QA
 
-- Tests use Vitest; suites live in `packages/cli/test/`, `packages/primitives/`, `packages/parity/test/`, and `sv-addons/registry/tests/`.
-- `packages/primitives` also has a browser suite run with `pnpm -F @shadcn-svelte/primitives test:browser`; root `pnpm test` does not run it.
-- CLI tests are Node-oriented unit tests that mock modules and prompts, use `memfs`, and compare transforms or generated registry data with assertions and inline snapshots.
-- Shared CLI fixtures cover full, partial, invalid, and legacy configurations; package-manager detection; colors; and Svelte/Tailwind compatibility.
+- Tests use Vitest.
+  Suites live in `packages/cli/test/`, `packages/primitives/`, `packages/parity/test/`, and `sv-addons/registry/tests/`.
+- `packages/primitives` also has a browser suite: `pnpm -F @shadcn-svelte/primitives test:browser`.
+  Root `pnpm test` does not run it.
+- CLI tests are Node-oriented unit tests that mock modules and prompts and use `memfs`.
+  They compare transforms or generated registry data with assertions and inline snapshots.
+- Shared CLI fixtures cover full, partial, invalid, and legacy configurations and package-manager detection.
+  They also cover colors and Svelte/Tailwind compatibility.
 - Reuse these fixtures instead of inventing one-off setup.
-- Run focused CLI tests with `pnpm -F shadcn-svelte test`; its `test:setup` first creates and builds the `sv-addons/registry` demo registry.
+- Run focused CLI tests with `pnpm -F shadcn-svelte test`.
+  Its `test:setup` first creates and builds the `sv-addons/registry` demo registry.
 - Root `pnpm check` covers every workspace package with a `check` script, not `repro`.
 - Review inline snapshot changes manually, especially registry JSON and CSS transformer output.
 - No coverage threshold or coverage command is configured; do not claim coverage guarantees from test count alone.
-- Before submitting, use the narrowest relevant check; use `pnpm check` for Svelte/TypeScript contracts and `pnpm lint` for formatting plus lint validation.
+- Before submitting, use the narrowest relevant check.
+  Use `pnpm check` for Svelte/TypeScript contracts and `pnpm lint` for formatting plus lint validation.
