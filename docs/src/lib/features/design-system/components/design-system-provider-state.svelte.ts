@@ -275,10 +275,22 @@ class DesignSystemState implements IDesignSystemState {
 	}
 
 	randomize() {
+		// A locked theme or chart color only exists for some base colors, so draw the base color
+		// from those; otherwise the lock yields a preset whose theme the base color does not offer.
+		const lockedColors = [
+			this.locks.theme ? this.theme : undefined,
+			this.locks.chartColor ? this.chartColor : undefined,
+		].filter((name) => name !== undefined);
+		const compatibleBaseColors = PRESET_BASE_COLOR_KEYS.filter((baseColor) => {
+			const themes = getThemesForBaseColor(baseColor);
+			return lockedColors.every((name) => themes.some((theme) => theme.name === name));
+		});
+
 		// Use current value if locked, otherwise randomize.
-		const selectedBaseColor = this.locks.baseColor
-			? this.baseColor
-			: randomItem(PRESET_BASE_COLOR_KEYS);
+		const selectedBaseColor =
+			this.locks.baseColor || compatibleBaseColors.length === 0
+				? this.baseColor
+				: randomItem(compatibleBaseColors);
 		const selectedStyle = this.locks.style ? this.style : randomItem(STYLES).name;
 
 		const context: RandomizeContext = {
