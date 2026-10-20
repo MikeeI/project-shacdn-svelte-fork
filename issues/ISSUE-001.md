@@ -1,9 +1,9 @@
 # ISSUE-001 — docs/create: `inherit` heading font renders in Geist
 
-State: PR-Ready
+State: Submitted
 Authorized-Work: Pull-Request-Implementation
 Publication-Target: New-pull-request
-External-Reference: Not published.
+External-Reference: https://github.com/huntabyte/shadcn-svelte/pull/2931
 Upstream-Repository: huntabyte/shadcn-svelte
 Contribution-Priority: High
 Root-Cause-Confidence: High
@@ -55,14 +55,13 @@ Fall back to `var(--font-sans)` instead of `fonts[0].font.family` when no headin
 
 ## Publication-Blockers
 
-- User approval of the exact draft and target.
-- Reasoning effort of the investigating sessions is unverified, so the draft omits the fixed `(extra high reasoning effort)` clause.
+None.
 
 ## Next-Action
 
-Summary: Await draft approval
-Action: Present the exact PR draft and target to the user for approval.
-Done-When: The user approves, edits, or rejects the draft.
+Summary: Monitor PR review
+Action: Respond to maintainer review on https://github.com/huntabyte/shadcn-svelte/pull/2931 with new evidence or requested changes only.
+Done-When: The PR is merged or closed and the record is archived.
 
 ## Pull-Request-Implementation
 

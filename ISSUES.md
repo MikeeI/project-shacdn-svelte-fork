@@ -14,7 +14,7 @@ Next finding ID: ISSUE-010
 
 | ID | Finding | State | Authorized-Work | Publication-Target | Contribution-Priority | Next-Action | External-Reference |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [ISSUE-001](issues/ISSUE-001.md) | docs/create: `inherit` heading font renders in Geist | PR-Ready | Pull-Request-Implementation | New-pull-request | High | Await draft approval | Not published. |
+| [ISSUE-001](issues/ISSUE-001.md) | docs/create: `inherit` heading font renders in Geist | Submitted | Pull-Request-Implementation | New-pull-request | High | Monitor PR review | https://github.com/huntabyte/shadcn-svelte/pull/2931 |
 | [ISSUE-002](issues/ISSUE-002.md) | docs/create: undo cannot get past a radius-constrained style change | PR-Ready | Pull-Request-Implementation | New-pull-request | High | Decide issue-first or PR | Not published. |
 | [ISSUE-003](issues/ISSUE-003.md) | docs/create: leaving /create restores `style-vega` instead of the site style | PR-Ready | Pull-Request-Implementation | New-pull-request | High | Await draft approval | Not published. |
 | [ISSUE-004](issues/ISSUE-004.md) | docs/create: Cmd/Ctrl+Z in text fields undoes the preset | PR-Ready | Pull-Request-Implementation | New-pull-request | Medium | Await draft approval | Not published. |
